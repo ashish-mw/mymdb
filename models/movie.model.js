@@ -35,6 +35,14 @@ module.exports = (sequelize, Sequelize) => {
     },
   });
 
+  // associations
+  Movie.associate = (models) => {
+    Movie.belongsTo(models.user, {
+      foreignKey: "createdByUser",
+      as: "createdUserInfo",
+    });
+  };
+
   return Movie;
 };
 
