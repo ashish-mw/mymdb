@@ -8,3 +8,11 @@
   3.3 logout
 4. Everyone can see the movies and their ratings
 
+
+
+## task
+
+- add rating to movie find
+- search movies function
+- delete a movie
+

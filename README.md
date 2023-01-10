@@ -43,3 +43,16 @@ A minimal [imdb](https://www.imdb.com/) clone. Requirements as mentioned in [req
   "updatedAt": DATE
 }
 ```
+
+## Tools
+
+- Prettier in vscode
+- Open user settings
+```
+{
+  ....
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  ....
+}
+```

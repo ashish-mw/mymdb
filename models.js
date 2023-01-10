@@ -13,6 +13,13 @@ const users = [
     createdAt: "2023-01-09T05:00:13.162Z",
     updatedAt: "2023-01-09T05:00:13.162Z",
   },
+  {
+    id: "1673326864288",
+    username: "mike",
+    password: "",
+    createdAt: "2023-01-09T05:00:13.162Z",
+    updatedAt: "2023-01-09T05:00:13.162Z",
+  },
 ];
 
 const movies = [
@@ -55,4 +62,18 @@ const ratings = [
     createdAt: "2023-01-10T05:02:01.938Z",
     updatedAt: "2023-01-10T05:02:01.938Z",
   },
+  {
+    id: "1673327157819",
+    user: "1673326864288",
+    movie: "1673326909891",
+    rating: 3,
+    createdAt: "2023-01-10T05:02:01.938Z",
+    updatedAt: "2023-01-10T05:02:01.938Z",
+  },
 ];
+
+module.exports = {
+  users,
+  movies,
+  ratings,
+};
