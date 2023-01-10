@@ -18,7 +18,7 @@ tables
 ```
 $ npx sequelize-cli migration:generate --name mig-name
 $ npx sequelize-cli db:migrate
-$ node_modules/.bin/sequelize db:migrate:undo
+$ npx sequelize-cli db:migrate:undo
 ```
 
 **Seeding**

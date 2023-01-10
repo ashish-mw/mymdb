@@ -16,7 +16,7 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING,
     },
     yearOfRelease: {
-      type: Sequelize.Number,
+      type: Sequelize.INTEGER,
     },
     createdByUser: {
       type: Sequelize.UUID,
