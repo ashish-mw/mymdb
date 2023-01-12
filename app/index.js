@@ -1,9 +1,12 @@
 require("dotenv").config();
 const express = require("express");
+const morgan = require("morgan");
 const app = express();
 const config = require("./config");
 
 const movieController = require("./controllers/movie.controller");
+
+app.use(morgan("tiny"));
 
 // CRUD
 // POST GET PUT/PATCH DELETE
