@@ -3,23 +3,24 @@ const express = require("express");
 const app = express();
 const config = require("./config");
 
+const movieController = require("./controllers/movie.controller");
+
 // CRUD
 // POST GET PUT/PATCH DELETE
-app.post("/", (req, res, next) => {
-  res.send({
-    message: "POST endpoint for /",
-  });
-});
+app.use("/movies", movieController);
 
-app.get("/", (req, res, next) => {
-  res.send({
-    message: "GET endpoint for /",
-  });
-});
-
+// 404
 app.use((req, res, next) => {
   return res.status(404).send({
     message: "Route not found",
+  });
+});
+
+// error handlers
+app.use((err, req, res, next) => {
+  console.log(err);
+  return res.status(500).send({
+    message: "Internal server error",
   });
 });
 
