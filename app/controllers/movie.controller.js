@@ -1,14 +1,20 @@
 const express = require("express");
 
+const { checkForUser } = require("../middlewares/auth.middleware");
 const db = require("../models");
 
 const router = express.Router();
 
-router.post("/", (req, res, next) => {
+router.post("/", checkForUser, async (req, res, next) => {
   try {
-    res.send({
-      message: "POST endpoint for /",
-    });
+    // TODO: do validation on body payload
+    const moviePayload = {
+      ...req.body,
+      createdByUser: res.locals.user,
+    };
+
+    const newMovie = await db.movie.create(moviePayload);
+    res.send(newMovie);
   } catch (error) {
     return next(error);
   }
@@ -42,16 +48,56 @@ router.get("/:movieId", async (req, res, next) => {
   }
 });
 
-router.put("/", (req, res, next) => {
-  res.send({
-    message: "PUT endpoint for /",
-  });
+router.put("/:movieId", checkForUser, async (req, res, next) => {
+  try {
+    const movie = await db.movie.findOne({
+      where: {
+        id: req.params.movieId,
+      },
+    });
+
+    if (!movie) {
+      return res.status(404).send({
+        message: "Movie not found",
+      });
+    }
+
+    // TODO: do updates for the rest of the fields in a movie
+    if (req.body.genre) {
+      movie.genre = req.body.genre;
+      // await db.movie.update(req.body, {
+      //   where: {
+      //     id: req.params.movieId,
+      //   },
+      // });
+    }
+    await movie.save();
+
+    return res.send(movie);
+  } catch (error) {
+    return next(error);
+  }
 });
 
-router.delete("/", (req, res, next) => {
-  res.send({
-    message: "DELETE endpoint for /",
-  });
+router.delete("/:movieId", checkForUser, async (req, res, next) => {
+  try {
+    const deleteCount = await db.movie.destroy({
+      where: {
+        id: req.params.movieId,
+        createdByUser: res.locals.user,
+      },
+    });
+    if (deleteCount === 0) {
+      return res.status(404).json({
+        message: "Movie not found or you are not the owner",
+      });
+    }
+    res.send({
+      deleted: deleteCount,
+    });
+  } catch (error) {
+    return next(error);
+  }
 });
 
 module.exports = router;

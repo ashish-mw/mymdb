@@ -6,6 +6,7 @@ const config = require("./config");
 
 const movieController = require("./controllers/movie.controller");
 
+app.use(express.json());
 app.use(morgan("tiny"));
 
 // CRUD
