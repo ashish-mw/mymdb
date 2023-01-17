@@ -25,6 +25,11 @@ app.use((req, res, next) => {
 // error handlers
 app.use((err, req, res, next) => {
   console.log(err);
+  if (err.message == "jwt expired") {
+    return res.status(403).send({
+      message: "Bad jwt token",
+    });
+  }
   return res.status(500).send({
     message: "Internal server error",
   });

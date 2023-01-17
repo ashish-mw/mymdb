@@ -1,13 +1,41 @@
 const express = require("express");
 const argon2 = require("argon2");
+
 const db = require("../models");
+const { makeJWT } = require("../utils");
 
 const router = express.Router();
 
-router.post("/login", (req, res, next) => {
+router.post("/login", async (req, res, next) => {
   try {
+    // TODO: do payload validation
+    const user = await db.user.findOne({
+      where: {
+        username: req.body.username,
+      },
+      attributes: ["id", "username", "password"],
+    });
+
+    if (!user) {
+      return res.status(403).send({
+        message: "User is not present",
+      });
+    }
+
+    // compare passwords
+    const passwordOk = await argon2.verify(user.password, req.body.password);
+    if (!passwordOk) {
+      return res.status(403).send({
+        message: "User credentials invalid",
+      });
+    }
+
+    const token = makeJWT({
+      user: user.id,
+    });
+
     return res.send({
-      message: "login works!",
+      token,
     });
   } catch (error) {
     return next(error);
