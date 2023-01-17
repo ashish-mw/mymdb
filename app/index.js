@@ -5,6 +5,7 @@ const app = express();
 const config = require("./config");
 
 const movieController = require("./controllers/movie.controller");
+const userController = require("./controllers/user.controller");
 
 app.use(express.json());
 app.use(morgan("tiny"));
@@ -12,6 +13,7 @@ app.use(morgan("tiny"));
 // CRUD
 // POST GET PUT/PATCH DELETE
 app.use("/movies", movieController);
+app.use("/users", userController);
 
 // 404
 app.use((req, res, next) => {
