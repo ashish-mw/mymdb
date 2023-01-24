@@ -12,8 +12,8 @@ app.use(morgan("tiny"));
 
 // CRUD
 // POST GET PUT/PATCH DELETE
-app.use("/movies", movieController);
-app.use("/users", userController);
+app.use("/api/movies", movieController);
+app.use("/api/users", userController);
 
 // 404
 app.use((req, res, next) => {
