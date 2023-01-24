@@ -5,6 +5,7 @@ const db = require("../models");
 const { makeJWT } = require("../utils");
 const validateSchema = require("../middlewares/validate.middleware");
 const userSchemas = require("../validations/user.validation");
+const { checkForUser } = require("../middlewares/auth.middleware");
 
 const router = express.Router();
 
@@ -84,5 +85,22 @@ router.post(
     }
   }
 );
+
+router.get("/info", checkForUser, async (req, res, next) => {
+  try {
+    const userInfo = await db.user.findOne({
+      where: {
+        id: res.locals.user,
+      },
+      attributes: ["id", "username", "createdAt"],
+    });
+    const json = JSON.parse(JSON.stringify(userInfo));
+    return res.send({
+      ...json,
+    });
+  } catch (error) {
+    return next(error);
+  }
+});
 
 module.exports = router;
