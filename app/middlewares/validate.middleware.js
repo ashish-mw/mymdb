@@ -8,7 +8,7 @@ const validateSchema = (schema) => {
       const { details } = error;
       const message = details.map((i) => i.message).join(",");
       console.log("error", message);
-      res.status(422).json({ messgae: message });
+      res.status(422).json({ message: message });
     }
   };
 };
