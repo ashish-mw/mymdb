@@ -25,7 +25,7 @@ app.use((req, res, next) => {
 // error handlers
 app.use((err, req, res, next) => {
   console.log(err);
-  if (err.message == "jwt expired") {
+  if (err.message == "jwt expired" || err.message == "invalid signature") {
     return res.status(403).send({
       message: "Bad jwt token",
     });
