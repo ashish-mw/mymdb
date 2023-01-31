@@ -46,7 +46,7 @@ router.get("/:movieId", async (req, res, next) => {
         {
           model: db.user,
           as: "createdUserInfo",
-          attributes: ['id', 'username']
+          attributes: ["id", "username"],
         },
       ],
     });
@@ -74,14 +74,31 @@ router.put(
         });
       }
 
-      if (req.body.genre) {
-        movie.genre = req.body.genre;
-        // await db.movie.update(req.body, {
-        //   where: {
-        //     id: req.params.movieId,
-        //   },
-        // });
-      }
+      // if (req.body.genre) {
+      // movie.genre = req.body.genre;
+      // await db.movie.update(req.body, {
+      //   where: {
+      //     id: req.params.movieId,
+      //   },
+      // });
+      // }
+      const updatePayload = {
+        ...req.body,
+      };
+
+      /*
+      name: joi.string().required(),
+      genre: joi.string().required(),
+      language: joi.string().required(),
+      yearOfRelease: joi.number().required(),
+      */
+
+      await db.movie.update(updatePayload, {
+        where: {
+          id: req.params.movieId,
+        },
+      });
+
       await movie.save();
 
       return res.send(movie);
